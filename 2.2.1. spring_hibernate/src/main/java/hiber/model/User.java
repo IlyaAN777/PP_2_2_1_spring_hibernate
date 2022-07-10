@@ -1,11 +1,14 @@
 package hiber.model;
 
+import org.hibernate.annotations.Cascade;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
-public class User  {
+public class User {
+
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,16 +23,23 @@ public class User  {
    @Column(name = "email")
    private String email;
 
-   @OneToOne
-   @JoinColumn(name = "car_id")
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "user", referencedColumnName = "id")
    private Car car;
 
    public User() {}
-   
-   public User(String firstName, String lastName, String email) {
+
+   public User(String firstName, String lastName, String email, Car car) {
       this.firstName = firstName;
       this.lastName = lastName;
       this.email = email;
+      this.car = car;
+   }
+   public Car getCar(){
+      return car;
+   }
+   public void setCar(){
+      this.car=car;
    }
 
    public Long getId() {
@@ -62,5 +72,12 @@ public class User  {
 
    public void setEmail(String email) {
       this.email = email;
+   }
+
+   @Override
+   public String toString() {
+      return "User" +
+              "firstName='" + firstName + '\'' +
+              ", lastName='" + lastName + '\'' ;
    }
 }

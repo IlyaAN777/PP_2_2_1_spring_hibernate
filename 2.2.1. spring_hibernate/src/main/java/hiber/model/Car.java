@@ -1,25 +1,32 @@
 package hiber.model;
 
+import org.hibernate.annotations.Cascade;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 
-
 @Entity
-@Table(name = "cars")
-
+@Table(name = "car")
 public class Car {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)  //   @Column(name = "id", nullable = false)
-   private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @OneToOne(mappedBy = "car")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private User user;
     @Column(name = "model")
     private String model;
-
     @Column(name = "series")
     private int series;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    public Car() {
+
+    }
+    public Car(int series,String model){
+        this.series = series;
+        this.model = model;
+    }
 
     public User getUser() {
         return user;
@@ -27,14 +34,6 @@ public class Car {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Car(){}
-
-    public Car( String model, int series) {
-
-        this.model = model;
-        this.series = series;
     }
 
     public Long getId() {
@@ -63,10 +62,7 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", model='" + model + '\'' +
-                ", series=" + series +
-                '}';
+        return "model = " + model + '\'' +
+                ", series = " + series ;
     }
 }
