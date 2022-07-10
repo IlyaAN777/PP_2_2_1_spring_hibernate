@@ -2,14 +2,14 @@ package hiber.model;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "cars")
 
 public class Car {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @GeneratedValue (strategy = GenerationType.IDENTITY)  //   @Column(name = "id", nullable = false)
+   private Long id;
 
     @Column(name = "model")
     private String model;
@@ -31,8 +31,8 @@ public class Car {
 
     public Car(){}
 
-    public Car(Long id, String model, int series) {
-        this.id = id;
+    public Car( String model, int series) {
+
         this.model = model;
         this.series = series;
     }
